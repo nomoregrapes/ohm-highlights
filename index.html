@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Open Historical Map Highlights (OHMH)</title>
-	<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" />
-	<script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
+	<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css" />
+	<script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js"></script>
 
 	<link rel="stylesheet" href="jquery-ui-1.10.4/css/ui-lightness/jquery-ui-1.10.4.min.css" />
     <link rel="stylesheet" href="jQRangeSlider-5.7.0/css/iThing.css" type="text/css" /><!-- for dateRangeSlider -->
@@ -46,7 +46,7 @@
 		}
 		function showLocations(ajaxresponse) {
 			lyrStuff.clearLayers();
-			lyrStuff.addData(ajaxresponse);
+			lyrStuff.setGeoJSON(ajaxresponse);
 		}
 		function attachClickEvent(feature, layer)
 		{
@@ -59,7 +59,7 @@
 		}
 		$( document ).ready(function() {
 			//load map
-			map = L.map('map').setView([50, 0], 2);
+			map = L.mapbox.map('map').setView([50, 0], 2);
 			//geolocate
 			//map.locate({setView: true, maxZoom: 19});
 			//add cams
@@ -85,10 +85,10 @@
 				]
 			};
 
-			lyrStuff = L.geoJson(baseJson, {
+			lyrStuff = L.mapbox.featureLayer(baseJson, {
 				//onEachFeature: attachClickEvent
-			});
-			map.addLayer(lyrStuff);
+			})
+			.addTo(map);
 
 
 			getStuffLocations();
@@ -100,6 +100,16 @@
 				},
 				defaultValues: {min: new Date(-3200, 0, 1),
 					max: new Date(1776, 6, 4)}
+			});
+
+			$("#slider").bind("valuesChanged", function(e, data){
+				console.log("Values just changed. min: " + data.values.min + " max: " + data.values.max);
+
+				lyrStuff.setFilter(function(f) {
+					afterStart = (f.properties['earliest_date'] >= (data.values.min.getYear() + 1900) );
+					beforeEnd =  (f.properties['earliest_date'] <= (data.values.max.getYear() + 1900) );
+					return afterStart && beforeEnd;
+				});
 			});
 		});
 	</script>
