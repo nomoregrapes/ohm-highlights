@@ -4,7 +4,12 @@
 	<title>Open Historical Map Highlights (OHMH)</title>
 	<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" />
 	<script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
-	<script src="jquery.js"></script>
+
+	<link rel="stylesheet" href="jquery-ui-1.10.4/css/ui-lightness/jquery-ui-1.10.4.min.css" />
+    <link rel="stylesheet" href="jQRangeSlider-5.7.0/css/iThing.css" type="text/css" /><!-- for dateRangeSlider -->
+	<script src="jquery-ui-1.10.4/js/jquery-1.10.2.js"></script>
+	<script src="jquery-ui-1.10.4/js/jquery-ui-1.10.4.min.js"></script>
+    <script src="jQRangeSlider-5.7.0/jQDateRangeSlider-min.js"></script>
 
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<style type="text/css">
@@ -16,6 +21,10 @@
 		.filters {
 			float: left;
 		}
+			.filters .slider-container {
+				padding: 5px;
+				width: 500px;
+			}
 
 		#map { 
 			clear: both;
@@ -70,11 +79,11 @@
 
 
 
-var baseJson = {
-	"type":"FeatureCollection",
-	"features":[
-	]
-};
+			var baseJson = {
+				"type":"FeatureCollection",
+				"features":[
+				]
+			};
 
 			lyrStuff = L.geoJson(baseJson, {
 				//onEachFeature: attachClickEvent
@@ -83,6 +92,15 @@ var baseJson = {
 
 
 			getStuffLocations();
+
+
+			$("#slider").dateRangeSlider({
+				bounds: {min: new Date(-4000, 0, 1),
+					max: new Date(2014, 5, 1)
+				},
+				defaultValues: {min: new Date(-3200, 0, 1),
+					max: new Date(1776, 6, 4)}
+			});
 		});
 	</script>
 </head>
@@ -94,7 +112,10 @@ var baseJson = {
 	</div>
 
 	<div class="filters">
-	.
+		Show highlights during: 
+		<article class="slider-container">
+			<div id="slider"></div>
+		</article>
 	</div>
 
 	<div class="container">
