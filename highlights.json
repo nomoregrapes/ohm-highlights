@@ -37,6 +37,20 @@
 	        "type": "Point",
 	        "coordinates": [-122.3331,47.6021]
 	    }
+	},
+
+	{ "type": "Feature", "properties": {
+			"name": "New York Buildings",
+			"popupContent": "Imported and managed by NY Public Library.",
+			"earliest_date": 1800,
+			"latest_date": 2014,
+			"category": "region",
+			"zoom_recomendation": 13
+	    },
+	    "geometry": {
+	        "type": "Point",
+	        "coordinates": [-73.9822, 40.7318]
+	    }
 	}
 
 
