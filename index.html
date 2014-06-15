@@ -1,14 +1,26 @@
 
 <html>
 <head>
-	<title>Map of points</title>
+	<title>Open Historical Map Highlights (OHMH)</title>
 	<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" />
 	<script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
 	<script src="jquery.js"></script>
 
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 	<style type="text/css">
-		#map { height: 90%; }
+
+		.header {
+			float: left;
+			width: 465px;
+		}
+		.filters {
+			float: left;
+		}
+
+		#map { 
+			clear: both;
+			height: 80%; 
+		}
 	</style>
 	<script type="text/javascript">
 		var map;
@@ -77,8 +89,14 @@ var baseJson = {
 <body>
 
 	<div class="header">
-		<h1>Map of points</h1>
+		<h1>Open Historical Map Highlights</h1>
+		<p>Highlights of data being managed in OpenHistoricalMap.</p>
 	</div>
+
+	<div class="filters">
+	.
+	</div>
+
 	<div class="container">
 
 		<div id="map"></div>
