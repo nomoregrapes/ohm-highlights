@@ -1,0 +1,42 @@
+{"type":"FeatureCollection", "features":[
+
+
+	{ "type": "Feature", "properties": {
+			"name": "Leeds City Centre",
+			"popupContent": "Old buildings of Leeds, UK.",
+			"earliest_date": 1854,
+			"category": "site"
+	    },
+	    "geometry": {
+	        "type": "Point",
+	        "coordinates": [-1.5505, 53.7951]
+	    }
+	},
+
+
+	{ "type": "Feature", "properties": {
+			"name": "Dutch Towns",
+			"popupContent": "",
+			"earliest_date": 690,
+			"category": "region"
+	    },
+	    "geometry": {
+	        "type": "Point",
+	        "coordinates": [5.304,51.558]
+	    }
+	},
+
+
+	{ "type": "Feature", "properties": {
+			"name": "Detail in Seattle",
+			"earliest_date": 1860,
+			"category": "site"
+	    },
+	    "geometry": {
+	        "type": "Point",
+	        "coordinates": [-122.3331,47.6021]
+	    }
+	}
+
+
+]}

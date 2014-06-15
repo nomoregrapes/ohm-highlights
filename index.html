@@ -1,0 +1,87 @@
+
+<html>
+<head>
+	<title>Map of points</title>
+	<link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css" />
+	<script src="https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js"></script>
+	<script src="jquery.js"></script>
+
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+	<style type="text/css">
+		#map { height: 90%; }
+	</style>
+	<script type="text/javascript">
+		var map;
+		var lyrStuff;
+
+		function getStuffLocations() {
+			var data = 'bbox=' + map.getBounds().toBBoxString();
+			$.ajax({
+					url: 'highlights.json',
+					dataType: 'json',
+					data: data,
+					success: showLocations
+			});
+		}
+		function showLocations(ajaxresponse) {
+			lyrStuff.clearLayers();
+			lyrStuff.addData(ajaxresponse);
+		}
+		function attachClickEvent(feature, layer)
+		{
+			//layer.on('click', visitCam, feature.properties.refCode);
+		}
+		function visitCam()
+		{
+			//console.log("hello"+ this);
+			window.location = "selfie.php?cam=" + this;
+		}
+		$( document ).ready(function() {
+			//load map
+			map = L.map('map').setView([50, 0], 2);
+			//geolocate
+			//map.locate({setView: true, maxZoom: 19});
+			//add cams
+			//var camerasFile = 'getcams.php';
+
+			//more base layers
+			var OpenHistorialLayer = L.tileLayer('http://www.openhistoricalmap.org/ohm_tiles/{z}/{x}/{y}.png', {
+			attribution: 'Maps from <a href="http://wiki.openstreetmap.org/wiki/OHM">OHM</a>',
+			});
+			map.addLayer(OpenHistorialLayer);
+
+			//add a layer switcher
+			var baseMaps = {
+				"Open Historical Map": OpenHistorialLayer
+			};
+			L.control.layers(baseMaps).addTo(map);
+
+
+
+var baseJson = {
+	"type":"FeatureCollection",
+	"features":[
+	]
+};
+
+			lyrStuff = L.geoJson(baseJson, {
+				//onEachFeature: attachClickEvent
+			});
+			map.addLayer(lyrStuff);
+
+
+			getStuffLocations();
+		});
+	</script>
+</head>
+<body>
+
+	<div class="header">
+		<h1>Map of points</h1>
+	</div>
+	<div class="container">
+
+		<div id="map"></div>
+	</div>
+</body>
+</html>
