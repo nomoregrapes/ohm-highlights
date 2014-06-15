@@ -110,12 +110,60 @@
 			});
 
 			$("#slider").bind("valuesChanged", function(e, data){
-				console.log("Values just changed. min: " + data.values.min + " max: " + data.values.max);
+				//console.log("Values just changed. min: " + data.values.min + " max: " + data.values.max);
+
+				//odd value fixes
+				var rangeMin = data.values.min.getYear() + 1900;
+				var rangeMax = data.values.max.getYear() + 1900;
 
 				lyrStuff.setFilter(function(f) {
-					afterStart = (f.properties['earliest_date'] >= (data.values.min.getYear() + 1900) );
-					beforeEnd =  (f.properties['earliest_date'] <= (data.values.max.getYear() + 1900) );
-					return afterStart && beforeEnd;
+					//check if it's in date
+					if(f.properties['earliest_date'] != undefined) {
+						if(f.properties['earliest_date'] > (rangeMin) ) {
+							afterMin = true;
+						} else {
+							afterMin = false; //before range
+						}
+					} else {
+						afterMin = true; //assume
+					}
+
+					if(f.properties['latest_date'] != undefined) {
+						if(f.properties['latest_date'] < (rangeMax) ) {
+							beforeMax = true;
+						} else {
+							beforeMax = false; //before range
+						}
+						if(f.properties['earliest_date'] == undefined) {
+							if(f.properties['latest_date'] < (rangeMin) ) {
+								afterMin = false; //overwrite our assumption
+							}
+						}
+					} else {
+						beforeMax = true; //assume
+					}
+
+
+					if(f.properties['latest_date'] == undefined && f.properties['earliest_date'] != undefined) {
+						if(f.properties['earliest_date'] > (rangeMax) ) {
+							beforeMax = false; //overwrite our assumption
+						}
+					}
+					
+					//old style checks
+					afterStart = (f.properties['earliest_date'] >= (rangeMin) );
+					beforeEnd =  (f.properties['earliest_date'] <= (rangeMax) );
+
+/*
+					console.log(
+						f.properties['earliest_date'] + ' to ' + f.properties['latest_date'] + ' for '
+						+ rangeMin + ' to ' + rangeMax
+						+ ' afterMin=' + afterMin + ' beforeMax=' + beforeMax
+						);
+*/
+
+					//make the changes
+					return afterMin && beforeMax;
 				});
 			});
 		});
