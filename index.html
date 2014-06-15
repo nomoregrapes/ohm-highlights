@@ -47,6 +47,13 @@
 		function showLocations(ajaxresponse) {
 			lyrStuff.clearLayers();
 			lyrStuff.setGeoJSON(ajaxresponse);
+			lyrStuff.eachLayer(function(layer) {
+			    var content = '<h2>' + layer.feature.properties.name + '<\/h2>' +
+			        '<p>Earliest date: ' + layer.feature.properties.earliest_date + '<br \/>' +
+			        'category: ' + layer.feature.properties.category + '<\/p>' + 
+			        '<p><a href="http://www.openhistoricalmap.org/#map=' + layer.feature.properties.zoom_recomendation + '/' + layer.feature.geometry.coordinates[1] + '/' + layer.feature.geometry.coordinates[0] + '&layers=H" target="_blank">view on OHM';
+			    layer.bindPopup(content);
+			});
 		}
 		function attachClickEvent(feature, layer)
 		{

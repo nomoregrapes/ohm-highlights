@@ -5,7 +5,8 @@
 			"name": "Leeds City Centre",
 			"popupContent": "Old buildings of Leeds, UK.",
 			"earliest_date": 1854,
-			"category": "site"
+			"category": "site",
+			"zoom_recomendation": 17
 	    },
 	    "geometry": {
 	        "type": "Point",
